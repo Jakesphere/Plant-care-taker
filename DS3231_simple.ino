@@ -48,17 +48,12 @@ void setup() {
     pinMode(CLOCK_INTERRUPT_PIN, INPUT_PULLUP);
     attachInterrupt(digitalPinToInterrupt(CLOCK_INTERRUPT_PIN), onAlarm, FALLING);
     
-    // set alarm 1, 2 flag to false (so alarm 1, 2 didn't happen so far)
-    // if not done, this easily leads to problems, as both register aren't reset on reboot/recompile
     rtc.clearAlarm(1);
     rtc.clearAlarm(2);
     
-    // stop oscillating signals at SQW Pin
-    // otherwise setAlarm1 will fail
     rtc.writeSqwPinMode(DS3231_OFF);
     
-    // turn off alarm 2 (in case it isn't off already)
-    // again, this isn't done at reboot, so a previously set alarm could easily go overlooked
+   
     rtc.disableAlarm(2);
 
     
@@ -74,19 +69,7 @@ void setup() {
 void loop() {
   temp= analogRead(0);
 light= analogRead(1);
-   /* // print current time
-    char timeNow[10] = "hh:mm:ss";
-    rtc.now().toString(timeNow);
-   Serial.print("Present Time = ");
-    Serial.print(timeNow);
-    
-    // the value at SQW-Pin (because of pullup 1 means no alarm)
-    Serial.print(" SQW: ");
-    Serial.print(digitalRead(CLOCK_INTERRUPT_PIN));
-    // whether a alarm happened happened
-    Serial.print(" Alarm1: ");
-    Serial.println(rtc.alarmFired(1)? "Yes. " : "No. ");
-    */
+  
     Serial.print("Temperature: ");
     Serial.println(temp);
     Serial.print("Light intensity: ");
@@ -137,7 +120,6 @@ char timeNow[10] = "hh:mm:ss";
     DateTime now = rtc.now();
     // future alarm time is now + timespan given.
     DateTime future (now + TimeSpan(0,0,0,30)); //total seconds or // days,hrs,mins,secs
-    // schedule an alarm 15 seconds in the future
     // Alarm when hours, minutes and seconds match 
     rtc.setAlarm1(future,DS3231_A1_Hour);
    }
