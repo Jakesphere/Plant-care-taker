@@ -12,4 +12,3 @@ The LEDs were chosen to be blue since plants absorb blue light very well compare
 Every specified time period (etc. could be every 12 hours, could be every hour) the DS3231 will interrupt the microcontroller 
 to lower the straw attached to the water bottle and feed the plant for 2 seconds, this is achieved using a servo. 
 
-IMPORTANT: please watch a real-time demonstration of this at https://youtu.be/RpGoBx-Lw0k?si=Dee9iIBaPrt8N7Fd
